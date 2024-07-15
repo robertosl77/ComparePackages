@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comparar Packages</title>
+</head>
+<body>
+    <h1>Comparar Packages</h1>
+    <form method="post" action="/comparativa">
+        <label for="origen">Seleccione el Origen:</label>
+        <select id="origen" name="origen" required>
+            <option value="FMT">FMT</option>
+            <option value="PMT">PMT</option>
+            <option value="AGREGA CT">AGREGA CT</option>
+            <option value="MODIFICA MT">MODIFICA MT</option>
+            <option value="INSERTA BT">INSERTA BT</option>
+            <option value="MODIFICA BT">MODIFICA BT</option>
+        </select>
+        <br><br>
+        <label for="documento">Número de Documento (opcional):</label>
+        <input type="text" id="documento" name="documento">
+        <br><br>
+        <button type="submit">Comparar</button>
+    </form>
+</body>
+</html>
