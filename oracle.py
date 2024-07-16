@@ -26,3 +26,14 @@ class OracleDB:
         rows = cursor.fetchall()
         cursor.close()
         return [dict(zip(columns, row)) for row in rows]
+
+    def execute_plsql(self, plsql):
+        cursor = self.connection.cursor()
+        out_cursor = cursor.var(cx_Oracle.CURSOR)
+        cursor.execute(plsql, cursor=out_cursor)
+        result_cursor = out_cursor.getvalue()
+        columns = [col[0].lower() for col in result_cursor.description]
+        rows = result_cursor.fetchall()
+        result_cursor.close()
+        cursor.close()
+        return [dict(zip(columns, row)) for row in rows]

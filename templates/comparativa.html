@@ -2,19 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Comparativa de Packages</title>
-    <style>
-        .red { color: red; }
-        .yellow { color: yellow; }
-        .green { color: green; }
-        table, th, td { border: 1px solid black; border-collapse: collapse; padding: 5px; }
-    </style>
+    <title>Comparar Packages</title>
 </head>
 <body>
-    <h1>Comparativa de Packages - {{ origen }}</h1>
-    
-    <h2>Query Nuevo</h2>
-    <table>
+    <h1>Comparar Packages</h1>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    <table border="1">
         <tr>
             <th>ID</th>
             <th>Documento</th>
@@ -26,17 +21,18 @@
         {% for row in nuevo_data %}
         <tr>
             <td>{{ row.id }}</td>
-            <td class="{% if 'documento' in row.differences %}yellow{% endif %}">{{ row.documento }}</td>
-            <td class="{% if 'objectid' in row.differences %}yellow{% endif %}">{{ row.objectid }}</td>
-            <td class="{% if 'ct' in row.differences %}yellow{% endif %}">{{ row.ct }}</td>
-            <td class="{% if 'afectados' in row.differences %}yellow{% endif %}">{{ row.afectados }}</td>
-            <td class="{{ row.status }}">{{ row.status }}</td>
+            <td>{{ row.documento }}</td>
+            <td>{{ row.objectid }}</td>
+            <td>{{ row.ct }}</td>
+            <td>{{ row.afectados }}</td>
+            <td style="background-color: {% if row.status == 'green' %}lightgreen{% elif row.status == 'yellow' %}yellow{% elif row.status == 'red' %}lightcoral{% endif %};">{{ row.status }}</td>
         </tr>
         {% endfor %}
     </table>
-    
-    <h2>Query Viejo (No coincidentes)</h2>
-    <table>
+
+    {% if viejo_only %}
+    <h2>No coincidentes en 'viejo'</h2>
+    <table border="1">
         <tr>
             <th>ID</th>
             <th>Documento</th>
@@ -54,11 +50,12 @@
         </tr>
         {% endfor %}
     </table>
-    
+    {% endif %}
+
     <h2>Resumen</h2>
-    <p>CT Nuevo: {{ summary.nuevo_ct }}</p>
-    <p>Afectados Nuevo: {{ summary.nuevo_afectados }}</p>
-    <p>CT Viejo: {{ summary.viejo_ct }}</p>
-    <p>Afectados Viejo: {{ summary.viejo_afectados }}</p>
+    <p>Nuevo CT: {{ summary.nuevo_ct }}</p>
+    <p>Nuevo Afectados: {{ summary.nuevo_afectados }}</p>
+    <p>Viejo CT: {{ summary.viejo_ct }}</p>
+    <p>Viejo Afectados: {{ summary.viejo_afectados }}</p>
 </body>
 </html>
